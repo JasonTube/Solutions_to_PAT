@@ -1,19 +1,22 @@
 import math
-def isPrime(num):
+def isPrime(num,prime_list):
     #判断num是不是质数
-    if num==1:
+    if num <= 3:
+        prime_list.append(num)
+        return True
+    if num % 6 != 1 and num % 6 != 5:
         return False
-    elif num==2:
-        return True
-    else:
-        if num % 2 == 0:
+    tmp = int(math.sqrt(num))
+    for i in prime_list:
+        if i > tmp:
+            break
+        elif num % i == 0:
             return False
-        for i in range(3,int(math.sqrt(num))+1,2):
-            if num % i == 0:
-                return False
-        return True
+    prime_list.append(num)
+    return True
 
 if __name__=='__main__':
+    prime_list = []
     n = int(input())
     flags = [False]*2 + [True]*(n-1)
     result = 0
@@ -22,7 +25,7 @@ if __name__=='__main__':
     for i in range(1,n+1,2):
         if not flags[i]:
             continue
-        elif isPrime(i):
+        elif isPrime(i,prime_list):
             for j in range(2*i,n+1,i):
                 flags[j] = False
             if i-prime_old == 2:
