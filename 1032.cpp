@@ -2,6 +2,8 @@
 #include <vector>
 using namespace std;
 
+//Failed to work it out with py3 : (
+
 int main() {
     int n = 0, id = 0, gra = 0, max_gra = 0, max_id = 0;
     cin >> n;
