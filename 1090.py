@@ -1,5 +1,33 @@
 if __name__ == '__main__':
     N,M = [int(tmp) for tmp in input().split(" ")]
+    dangerous_dic = {}
+    
+    for i in range(N):
+        item1,item2 = input().split(" ")
+        if item1 in dangerous_dic:
+            dangerous_dic[item1].add(item2)
+        else:
+            temp = set()
+            temp.add(item2)
+            dangerous_dic[item1] = temp
+    #print(dangerous_dic)
+    
+    for i in range(M):
+        package = [tmp for tmp in input().split(" ")]
+        package = set(package[1:])
+        for j in package:
+            if j in dangerous_dic :
+                if package & dangerous_dic[j]:
+                # including same elements
+                    print("No")
+                    break
+        else:
+            print("Yes")
+
+
+'''
+if __name__ == '__main__':
+    N,M = [int(tmp) for tmp in input().split(" ")]
     
     item_list = []
     unsafe_tabel = []
@@ -12,30 +40,23 @@ if __name__ == '__main__':
         else:
             index = item_list.index(item1)
             unsafe_tabel[index].add(item2)
-        if not item2 in item_list:
-            item_list.append(item2)
-            unsafe_tabel.append({item1})
-        else:
-            index = item_list.index(item2)
-            unsafe_tabel[index].add(item1)
                 
     #print(item_list)
     #print(unsafe_tabel)
 
     for i in range(M):
         package = [tmp for tmp in input().split(" ")]
-        flag = True
+        package = set(package[1:])
         # 对每一行输入
-        for j in range(1,int(package[0])+1):
-            # item表中有package[j]，检查
-            if package[j] in item_list:
-                index = item_list.index(package[j])
-                # 检查package[j]后有没有元素冲突
-                tmp = set(package[j+1:]).intersection(unsafe_tabel[index])
-                if len(tmp) != 0:
-                    flag = False
+        for item in package:
+            # item表中有item，检查
+            try:
+                index = item_list.index(item)
+                if package & unsafe_tabel[index]:
+                    print('No')
                     break
-        if flag:
-            print('Yes')
+            except ValueError:
+                continue
         else:
-            print('No')
+            print('Yes')
+'''
